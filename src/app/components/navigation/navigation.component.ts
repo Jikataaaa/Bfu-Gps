@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { first } from 'rxjs';
 import { OnInit } from '@angular/core';
+import { Point } from '../../../models/Point';
 
 @Component({
   selector: 'app-navigation',
@@ -9,18 +10,33 @@ import { OnInit } from '@angular/core';
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css'
 })
-export class NavigationComponent implements OnInit {
-
-  private canvas!: HTMLCanvasElement;
-  private height:number = 500;
-  private width:number = 500;
+export class NavigationComponent implements AfterViewInit{
+  @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
+  public height:number = 500;
+  public width:number = 500;
   private stroke: string = 'black';
   private strokeWidth: number = 2;
+  private points: Point[] = [
+    new Point(1, 0.1, 0.1),
+    new Point(2, 0.2, 0.2),
+    new Point(3, 0.3, 0.3),
+    new Point(4, 0.4, 0.4),
+    new Point(5, 0.5, 0.5),
+    new Point(6, 0.6, 0.6),
+    new Point(7, 0.7, 0.7),
+    new Point(8, 0.8, 0.8),
+    new Point(9, 0.9, 0.9),
+  ];
 
-  ngOnInit() {
-    this.canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+  ngAfterViewInit(): void {
+    const canvas = this.canvas.nativeElement;
+    const ctx = canvas.getContext('2d')!;
+    
+    for (let i = 0; i < this.points.length - 1; i++) {
+      const firstPoint = this.points[i];
+      const secondPoint = this.points[i + 1];
+      this.drawLine(firstPoint, secondPoint, ctx);
+    }
   }
 
   private drawLine(firstPoint: Point, secondPoint: Point, ctx: CanvasRenderingContext2D) {
