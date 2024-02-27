@@ -1,8 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { first } from 'rxjs';
-import { OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { Point } from '../../../models/Point';
-
 @Component({
   selector: 'app-navigation',
   standalone: true,
@@ -10,6 +7,8 @@ import { Point } from '../../../models/Point';
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css'
 })
+
+
 export class NavigationComponent implements AfterViewInit{
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   public height:number = 500;
@@ -29,6 +28,33 @@ export class NavigationComponent implements AfterViewInit{
   ];
 
   ngAfterViewInit(): void {
+    this.points[0].addNeighbour(this.points[1]);
+    this.points[0].addNeighbour(this.points[2]);
+
+    this.points[1].addNeighbour(this.points[0]);
+    this.points[1].addNeighbour(this.points[3]);
+
+    
+    this.points[2].addNeighbour(this.points[0]);
+    this.points[2].addNeighbour(this.points[4]);
+
+    
+    this.points[3].addNeighbour(this.points[1]);
+    this.points[3].addNeighbour(this.points[5]);
+
+    
+    this.points[4].addNeighbour(this.points[2]);
+    this.points[4].addNeighbour(this.points[6]);
+
+    
+    this.points[5].addNeighbour(this.points[3]);
+    this.points[5].addNeighbour(this.points[7]);
+    
+    this.points[6].addNeighbour(this.points[4]);
+    this.points[6].addNeighbour(this.points[8]);
+
+    console.log(this.points[0].calculateShortestPath(this.points[8]));
+    
     const canvas = this.canvas.nativeElement;
     const ctx = canvas.getContext('2d')!;
     
