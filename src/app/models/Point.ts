@@ -7,14 +7,20 @@ export class Point {
     private floor: number | undefined; // TODO should be only number
     private neighbours : Point[];
     private shortestPath : Point[];
+    private displayName: string;
 
-    constructor(id: number, x: number, y: number, floor? : number) { // TODO
+    constructor(id: number, x: number, y: number, displayName: string, floor? : number) { // TODO
         this.x = x;
         this.y = y;
         this.id = id;
         this.floor = floor;
         this.neighbours = [];
         this.shortestPath = [];
+        this.displayName = displayName;
+    }
+
+    public getDisplayName() : string {
+        return this.displayName;
     }
 
     public getX(): number {
