@@ -1,10 +1,10 @@
 <form [formGroup]="form" class="p-3">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="m-2">
         <mat-label>Point 1</mat-label>
-        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="autocompleteInputPointFrom"
+        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointFromControl"
                 [matAutocomplete]="autoFrom">
         <mat-autocomplete #autoFrom="matAutocomplete" [displayWith]="displayPointName">
-        <mat-option *ngFor="let point of filteredPointsFrom | async" [value]="point">
+        <mat-option *ngFor="let point of filteredPointsFrom" [value]="point">
             {{point.getDisplayName()}}
         </mat-option>
         </mat-autocomplete>
@@ -12,10 +12,10 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Point 2</mat-label>
-        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="autocompleteInputPointTo"
+        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointToControl"
                 [matAutocomplete]="autoTo">
         <mat-autocomplete #autoTo="matAutocomplete" [displayWith]="displayPointName">
-        <mat-option *ngFor="let point of filteredPointsTo | async" [value]="point">
+        <mat-option *ngFor="let point of filteredPointsTo" [value]="point">
             {{point.getDisplayName()}}
         </mat-option>
         </mat-autocomplete>

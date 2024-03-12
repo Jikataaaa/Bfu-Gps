@@ -1,34 +1,35 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Point } from '../../models/Point';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
+import { CanvasDrawingService } from '../../services/canvas-drawing-service.service';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Observable, map, startWith } from 'rxjs';
-import { CanvasDrawingService } from '../../services/canvas-drawing-service.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navigation',
-  standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule,
-    CommonModule
+    MatFormFieldModule
   ],
+  standalone: true,
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css'
 })
 
 
-export class NavigationComponent implements AfterViewInit, OnInit{
-  @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
+export class NavigationComponent implements AfterViewInit{
+  @ViewChild('canvas') canvas: ElementRef<HTMLCanvasElement> | undefined;
   public form!: FormGroup;
-  private formBuilder: FormBuilder;
-  public filteredPointsFrom!: Observable<Point[]>;
-  public filteredPointsTo!: Observable<Point[]>;
+  public filteredPointsFrom: Point[] = [];
+  public filteredPointsTo: Point[] = [];
   private canvasDrawingServiceService: CanvasDrawingService;
 
   private stroke: string = 'black';
@@ -46,28 +47,28 @@ export class NavigationComponent implements AfterViewInit, OnInit{
     new Point(9, 0.9, 0.9, 'ertdfgasdwer'),
   ];
 
-  constructor(canvasDrawingServiceService: CanvasDrawingService, formBuilder: FormBuilder) {
+  constructor(canvasDrawingServiceService: CanvasDrawingService) {
     this.canvasDrawingServiceService = canvasDrawingServiceService;
-    this.formBuilder = formBuilder;
+    this.buildForm();
   }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      autocompleteInputPointFrom: [''],
-      autocompleteInputPointTo: ['']
+  private buildForm(): void {
+    this.form = new FormGroup({
+      PointFromControl: new FormControl(undefined, Validators.required),
+      PointToControl: new FormControl(undefined, Validators.required)
     });
 
-    this.filteredPointsFrom = this.form.controls['autocompleteInputPointFrom'].valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value))
-      );
+    this.form.get('PointFromControl')!.valueChanges.subscribe({
+      next: (value) => {
+        this.filteredPointsFrom = this.filter(value);
+      }
+    })
 
-    this.filteredPointsTo = this.form.controls['autocompleteInputPointTo'].valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value))
-      );
+    this.form.get('PointToControl')!.valueChanges.subscribe({
+      next: (value) => {
+        this.filteredPointsTo = this.filter(value);
+      }
+    })
   }
   
   private filter(value: string): Point[] {
@@ -82,48 +83,48 @@ export class NavigationComponent implements AfterViewInit, OnInit{
   
 
   ngAfterViewInit(): void {
-    this.points[0].addNeighbour(this.points[1]);
-    this.points[0].addNeighbour(this.points[2]);
+    // this.points[0].addNeighbour(this.points[1]);
+    // this.points[0].addNeighbour(this.points[2]);
 
-    this.points[1].addNeighbour(this.points[0]);
-    this.points[1].addNeighbour(this.points[3]);
-
-    
-    this.points[2].addNeighbour(this.points[0]);
-    this.points[2].addNeighbour(this.points[4]);
+    // this.points[1].addNeighbour(this.points[0]);
+    // this.points[1].addNeighbour(this.points[3]);
 
     
-    this.points[3].addNeighbour(this.points[1]);
-    this.points[3].addNeighbour(this.points[5]);
+    // this.points[2].addNeighbour(this.points[0]);
+    // this.points[2].addNeighbour(this.points[4]);
 
     
-    this.points[4].addNeighbour(this.points[2]);
-    this.points[4].addNeighbour(this.points[6]);
+    // this.points[3].addNeighbour(this.points[1]);
+    // this.points[3].addNeighbour(this.points[5]);
 
     
-    this.points[5].addNeighbour(this.points[3]);
-    this.points[5].addNeighbour(this.points[7]);
-    
-    this.points[6].addNeighbour(this.points[4]);
-    this.points[6].addNeighbour(this.points[8]);
+    // this.points[4].addNeighbour(this.points[2]);
+    // this.points[4].addNeighbour(this.points[6]);
 
-    console.log(this.points[0].calculateShortestPath(this.points[8]));
     
-    const canvas = this.canvas.nativeElement;
-    const ctx = canvas.getContext('2d')!;
+    // this.points[5].addNeighbour(this.points[3]);
+    // this.points[5].addNeighbour(this.points[7]);
     
-    for (let i = 0; i < this.points.length - 1; i++) {
-      const firstPoint = this.points[i];
-      const secondPoint = this.points[i + 1];
-      this.canvasDrawingServiceService.drawLine(
-        firstPoint, 
-        secondPoint, 
-        ctx, 
-        this.canvas.nativeElement.width, 
-        this.canvas.nativeElement.height, 
-        this.stroke, 
-        this.strokeWidth
-      );
-    }
+    // this.points[6].addNeighbour(this.points[4]);
+    // this.points[6].addNeighbour(this.points[8]);
+
+    // console.log(this.points[0].calculateShortestPath(this.points[8]));
+    
+    // const canvas = this.canvas.nativeElement;
+    // const ctx = canvas.getContext('2d')!;
+    
+    // for (let i = 0; i < this.points.length - 1; i++) {
+    //   const firstPoint = this.points[i];
+    //   const secondPoint = this.points[i + 1];
+    //   this.canvasDrawingServiceService.drawLine(
+    //     firstPoint, 
+    //     secondPoint, 
+    //     ctx, 
+    //     this.canvas.nativeElement.width, 
+    //     this.canvas.nativeElement.height, 
+    //     this.stroke, 
+    //     this.strokeWidth
+    //   );
+    // }
   }
 }
