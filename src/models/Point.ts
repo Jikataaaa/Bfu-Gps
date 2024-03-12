@@ -1,3 +1,5 @@
+import { AllFloorsPaths } from "./AllFloorsPaths";
+
 export class Point {
     private x: number;
     private y: number;
@@ -52,13 +54,20 @@ export class Point {
     public getShortestPath() : Point[] {
         return this.shortestPath;
     }
-    public calculateShortestPath(destination : Point) : Point[] {
+    public calculateShortestPath(destination : Point) : AllFloorsPaths {
         let settledPoints : Point[] = [];
         let unsettledPoints : Point[] = this.neighbours;
         this.shortestPath.push(...[]);
         let lastPoint : Point = this;
         let path : Point[] = [];
-
+        let result : AllFloorsPaths = {
+            fourth: [],
+            third: [],
+            second: [],
+            first: [],
+            zero: [],
+            undeground: []
+        };
         while(unsettledPoints.length != 0){
             let currentPoint : Point = unsettledPoints.pop()!;
             
@@ -67,19 +76,18 @@ export class Point {
                 break;
             }
             else{
-
-                if(currentPoint && settledPoints.includes(currentPoint)) {
-                    continue;
+                // if(currentPoint && settledPoints.includes(currentPoint)) {
+                //     continue;
                     
-                }else if(currentPoint && !settledPoints.includes(currentPoint)){
-                    settledPoints.push(currentPoint);
-                    unsettledPoints.push(...currentPoint.getNeighbours());
-                    currentPoint.setShortestPath(this.evaluateShortestPath(lastPoint));
-                }
+                // }else if(currentPoint && !settledPoints.includes(currentPoint)){
+                //     settledPoints.push(currentPoint);
+                //     unsettledPoints.push(...currentPoint.getNeighbours());
+                //     currentPoint.setShortestPath(this.evaluateShortestPath(lastPoint));
+                // }
             }
             lastPoint = currentPoint;
         }
-        return path;
+        return result;
     }
     private evaluateShortestPath(point : Point) : Point[] {
         let path : Point[] = [];
