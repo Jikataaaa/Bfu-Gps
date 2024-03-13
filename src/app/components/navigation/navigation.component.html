@@ -3,10 +3,10 @@
         <mat-label>Point 1</mat-label>
         <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointFromControl"
                 [matAutocomplete]="autoFrom">
-        <mat-autocomplete #autoFrom="matAutocomplete" [displayWith]="displayPointName">
-        <mat-option *ngFor="let point of filteredPointsFrom" [value]="point">
-            {{point.getDisplayName()}}
-        </mat-option>
+        <mat-autocomplete (optionSelected)="selectionChange($event)" #autoFrom="matAutocomplete" [displayWith]="displayPointName">
+            <mat-option *ngFor="let point of filteredPointsFrom" [value]="point">
+                {{point.getDisplayName()}}
+            </mat-option>
         </mat-autocomplete>
     </mat-form-field>
 
@@ -14,10 +14,10 @@
         <mat-label>Point 2</mat-label>
         <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointToControl"
                 [matAutocomplete]="autoTo">
-        <mat-autocomplete #autoTo="matAutocomplete" [displayWith]="displayPointName">
-        <mat-option *ngFor="let point of filteredPointsTo" [value]="point">
-            {{point.getDisplayName()}}
-        </mat-option>
+        <mat-autocomplete (optionSelected)="selectionChange($event)" #autoTo="matAutocomplete" [displayWith]="displayPointName">
+            <mat-option *ngFor="let point of filteredPointsTo" [value]="point">
+                {{point.getDisplayName()}}
+            </mat-option>
         </mat-autocomplete>
     </mat-form-field>
 </form>

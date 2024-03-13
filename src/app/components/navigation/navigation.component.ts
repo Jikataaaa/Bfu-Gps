@@ -1,14 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Point } from '../../models/Point';
-import { Observable, map, startWith } from 'rxjs';
 import { CanvasDrawingService } from '../../services/canvas-drawing-service.service';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navigation',
@@ -17,7 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FormsModule,
   ],
   standalone: true,
   templateUrl: './navigation.component.html',
@@ -58,6 +56,9 @@ export class NavigationComponent implements AfterViewInit{
       PointToControl: new FormControl(undefined, Validators.required)
     });
 
+    this.filteredPointsFrom = this.points;
+    this.filteredPointsTo = this.points;
+
     this.form.get('PointFromControl')!.valueChanges.subscribe({
       next: (value) => {
         this.filteredPointsFrom = this.filter(value);
@@ -71,8 +72,8 @@ export class NavigationComponent implements AfterViewInit{
     })
   }
   
-  private filter(value: string): Point[] {
-    const filterValue = value.toLowerCase();
+  private filter(value: Point): Point[] {
+    const filterValue = value.getDisplayName().toLowerCase();
     return this.points.filter(option => option.getDisplayName().toLowerCase().includes(filterValue));
   }
 
@@ -80,7 +81,9 @@ export class NavigationComponent implements AfterViewInit{
     return point && point.getDisplayName() ? point.getDisplayName() : '';
   }
 
-  
+  public selectionChange(event: MatAutocompleteSelectedEvent): void {
+    console.log(event.option.value);
+  }
 
   ngAfterViewInit(): void {
     // this.points[0].addNeighbour(this.points[1]);
