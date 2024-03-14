@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Point } from '../models/Point';
+import { Room } from '../models/Room';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class CanvasDrawingService {
 
   constructor() { }
 
-  public drawLine(firstPoint: Point, secondPoint: Point, ctx: CanvasRenderingContext2D, width: number, height: number, stroke: string, strokeWidth: number) {
+  public drawLine(firstPoint: Room, secondPoint: Room, ctx: CanvasRenderingContext2D, width: number, height: number, stroke: string, strokeWidth: number) {
     ctx.beginPath();
     // draw a circle at the starting point
     this.drawPoint(firstPoint, ctx, width, height);
@@ -32,7 +32,7 @@ export class CanvasDrawingService {
     ctx.stroke();
   }
 
-  public drawPoint(point: Point, ctx: CanvasRenderingContext2D, width: number, height: number) {
+  public drawPoint(point: Room, ctx: CanvasRenderingContext2D, width: number, height: number) {
     ctx.arc(point.getX() * width, point.getY() * height, 5, 0, 2 * Math.PI, false);
     ctx.fill();
   }

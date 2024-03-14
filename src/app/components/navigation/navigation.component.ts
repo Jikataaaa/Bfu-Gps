@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { Point } from '../../models/Point';
+import { Room } from '../../models/Room';
 import { CanvasDrawingService } from '../../services/canvas-drawing-service.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -26,23 +26,23 @@ import { CommonModule } from '@angular/common';
 export class NavigationComponent implements AfterViewInit{
   @ViewChild('canvas') canvas: ElementRef<HTMLCanvasElement> | undefined;
   public form!: FormGroup;
-  public filteredPointsFrom: Point[] = [];
-  public filteredPointsTo: Point[] = [];
+  public filteredPointsFrom: Room[] = [];
+  public filteredPointsTo: Room[] = [];
   private canvasDrawingServiceService: CanvasDrawingService;
 
   private stroke: string = 'black';
   private strokeWidth: number = 2;
 
-  private points: Point[] = [
-    new Point(1, 0.1, 0.1, 'asdasd'),
-    new Point(2, 0.2, 0.2, 'qweqwe'),
-    new Point(3, 0.3, 0.3, 'asdqwe'),
-    new Point(4, 0.4, 0.4, 'ertert'),
-    new Point(5, 0.5, 0.5, 'ert'),
-    new Point(6, 0.6, 0.6, 'dfgdfg'),
-    new Point(7, 0.7, 0.7, 'ertdfgert'),
-    new Point(8, 0.8, 0.8, 'asddfgert'),
-    new Point(9, 0.9, 0.9, 'ertdfgasdwer'),
+  private points: Room[] = [
+    new Room(1, 0.1, 0.1, 'asdasd', 0),
+    new Room(2, 0.2, 0.2, 'qweqwe', 0),
+    new Room(3, 0.3, 0.3, 'asdqwe', 0),
+    new Room(4, 0.4, 0.4, 'ertert', 0),
+    new Room(5, 0.5, 0.5, 'ert', 0),
+    new Room(6, 0.6, 0.6, 'dfgdfg', 0),
+    new Room(7, 0.7, 0.7, 'ertdfgert', 0),
+    new Room(8, 0.8, 0.8, 'asddfgert', 0),
+    new Room(9, 0.9, 0.9, 'ertdfgasdwer', 0),
   ];
 
   constructor(canvasDrawingServiceService: CanvasDrawingService) {
@@ -72,12 +72,12 @@ export class NavigationComponent implements AfterViewInit{
     })
   }
   
-  private filter(value: Point): Point[] {
+  private filter(value: Room): Room[] {
     const filterValue = value.getDisplayName().toLowerCase();
     return this.points.filter(option => option.getDisplayName().toLowerCase().includes(filterValue));
   }
 
-  public displayPointName(point: Point): string {
+  public displayPointName(point: Room): string {
     return point && point.getDisplayName() ? point.getDisplayName() : '';
   }
 

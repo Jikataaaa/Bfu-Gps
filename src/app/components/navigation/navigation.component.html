@@ -1,7 +1,7 @@
 <form [formGroup]="form" class="p-3">
     <mat-form-field appearance="fill" class="m-2">
-        <mat-label>Point 1</mat-label>
-        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointFromControl"
+        <mat-label>Room 1</mat-label>
+        <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointFromControl"
                 [matAutocomplete]="autoFrom">
         <mat-autocomplete (optionSelected)="selectionChange($event)" #autoFrom="matAutocomplete" [displayWith]="displayPointName">
             <mat-option *ngFor="let point of filteredPointsFrom" [value]="point">
@@ -11,8 +11,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-        <mat-label>Point 2</mat-label>
-        <input type="text" placeholder="Select a Point" aria-label="Point" matInput formControlName="PointToControl"
+        <mat-label>Room 2</mat-label>
+        <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointToControl"
                 [matAutocomplete]="autoTo">
         <mat-autocomplete (optionSelected)="selectionChange($event)" #autoTo="matAutocomplete" [displayWith]="displayPointName">
             <mat-option *ngFor="let point of filteredPointsTo" [value]="point">
