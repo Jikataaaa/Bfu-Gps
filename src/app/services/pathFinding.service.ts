@@ -5,13 +5,11 @@ import { Path } from '../models/Path';
 @Injectable({
   providedIn: 'root'
 })
-export class PathFindingService {
-
-    constructor(){}
-
+export class PathFindingService 
+{
     public calculateShortestPath(startRoom: Room, endRoom : Room) : Path[]{
-        let startFloor : number = startRoom.getFloor();
-        let endFloor : number = endRoom.getFloor();
+        let startFloor : number = startRoom.floor;
+        let endFloor : number = endRoom.floor;
         let result : Path[] = [];
         if(startFloor > endFloor){
             while(startFloor < endFloor){
@@ -42,5 +40,4 @@ export class PathFindingService {
         }
         return result;
     }
-
 }

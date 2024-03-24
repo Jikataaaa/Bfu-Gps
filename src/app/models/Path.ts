@@ -1,6 +1,8 @@
 import { Room } from "./Room";
 
-export interface Path {
-    floor: number,
-    rooms: Room[]
+export class Path {
+    constructor(
+        public floor: number,
+        public rooms: Room[]
+    ) {}
 }

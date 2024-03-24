@@ -1,64 +1,14 @@
-
 export class Room {
-    private x: number;
-    private y: number;
-    private id: number;
-    private floor: number;
-    private neighbours : Room[];
-    private shortestPath : Room[];
-    private displayName: string;
+    constructor(
+        public id: number, 
+        public x: number, 
+        public y: number, 
+        public displayName: string, 
+        public floor : number,
+        public neighbours : Room[] = [],
+        public shortestPath : Room[] = []
+    ) {}
 
-    constructor(id: number, x: number, y: number, displayName: string, floor : number) {
-        this.x = x;
-        this.y = y;
-        this.id = id;
-        this.floor = floor;
-        this.neighbours = [];
-        this.shortestPath = [];
-        this.displayName = displayName;
-    }
-
-    public getDisplayName() : string {
-        return this.displayName;
-    }
-
-    public getX(): number {
-        return this.x;
-    }
-
-    public setX(x: number): void {
-        this.x = x;
-    }
-
-    public getY(): number {
-        return this.y;
-    }
-
-    public setY(y: number): void {
-        this.y = y;
-    }
-
-    public getId(): number {
-        return this.id;
-    }
-    public setFloor(floor : number) : void {
-        this.floor = floor;
-    }
-    public getFloor() : number{ 
-        return this.floor;
-    }
-    public getNeighbours() : Room[]{
-        return this.neighbours;
-    }
-    public addNeighbour(point : Room) : void {
-        this.neighbours.push(point);
-    }
-    public setShortestPath(path : Room[]) : void{
-        this.shortestPath = path;
-    }
-    public getShortestPath() : Room[] {
-        return this.shortestPath;
-    }
     public calculateShortestPath(destination : Room) : Room[] {
         let settledPoints : Room[] = [];
         let unsettledPoints : Room[] = this.neighbours;
@@ -67,31 +17,31 @@ export class Room {
         let path : Room[] = [];
 
         while(unsettledPoints.length != 0){
-            let currentPoint : Room = unsettledPoints.pop()!;
+            let currentRoom : Room = unsettledPoints.pop()!;
 
-            if(currentPoint == destination) {
+            if(currentRoom == destination) {
                 path = this.evaluateShortestPath(lastPoint);
                 break;
             }
             else{
 
-                if(currentPoint && settledPoints.includes(currentPoint)) {
+                if(currentRoom && settledPoints.includes(currentRoom)) {
                     continue;
 
-                }else if(currentPoint && !settledPoints.includes(currentPoint)){
-                    settledPoints.push(currentPoint);
-                    unsettledPoints.push(...currentPoint.getNeighbours());
-                    currentPoint.setShortestPath(this.evaluateShortestPath(lastPoint));
+                }else if(currentRoom && !settledPoints.includes(currentRoom)){
+                    settledPoints.push(currentRoom);
+                    unsettledPoints.push(...currentRoom.neighbours);
+                    currentRoom.shortestPath = this.evaluateShortestPath(lastPoint);
                 }
             }
-            lastPoint = currentPoint;
+            lastPoint = currentRoom;
         }
         return path;
     }
-    private evaluateShortestPath(point : Room) : Room[] {
+    private evaluateShortestPath(room : Room) : Room[] {
         let path : Room[] = [];
-        path = point.getShortestPath();
-        path.push(point);
+        path = room.shortestPath;
+        path.push(room);
         return path;
     }
 }
