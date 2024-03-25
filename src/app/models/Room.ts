@@ -1,6 +1,5 @@
 export class Room {
     constructor(
-        public id: number, 
         public x: number, 
         public y: number, 
         public displayName: string, 
@@ -9,13 +8,38 @@ export class Room {
         public shortestPath : Room[] = []
     ) {}
 
-    public calculateShortestPath(destination : Room) : Room[] {
+    public addNeighbour(room : Room) : Room {
+        this.neighbours.push(room);
+        return this;
+    }
+    public findClosestStairs() : Room {
         let settledPoints : Room[] = [];
         let unsettledPoints : Room[] = this.neighbours;
-        this.shortestPath.push(...[]);
-        let lastPoint : Room = this;
+        let currentRoom : Room = this;
         let path : Room[] = [];
 
+        while(unsettledPoints.length != 0){
+            currentRoom = unsettledPoints.pop()!;
+
+            if(currentRoom.displayName == 'stairs') {
+                break;
+            }
+            else if(settledPoints.includes(currentRoom)){
+                continue;
+            }
+            else{
+                unsettledPoints.push(...currentRoom.neighbours);
+            }
+        }
+        return currentRoom;
+    }
+    public calculateShortestPath(destination : Room) : Room[] {
+
+        let settledPoints : Room[] = [];
+        settledPoints.push(this);
+        let unsettledPoints : Room[] = this.neighbours;
+        let lastPoint : Room = this;
+        let path : Room[] = [];
         while(unsettledPoints.length != 0){
             let currentRoom : Room = unsettledPoints.pop()!;
 
@@ -30,7 +54,10 @@ export class Room {
 
                 }else if(currentRoom && !settledPoints.includes(currentRoom)){
                     settledPoints.push(currentRoom);
-                    unsettledPoints.push(...currentRoom.neighbours);
+                    let neighbours : Room[] = currentRoom.neighbours;
+                    for (const neighbour of neighbours) {
+                        if(!settledPoints.includes(neighbour)) unsettledPoints.push(neighbour);
+                    }
                     currentRoom.shortestPath = this.evaluateShortestPath(lastPoint);
                 }
             }

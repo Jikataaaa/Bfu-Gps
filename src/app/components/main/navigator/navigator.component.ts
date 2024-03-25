@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Room } from '../../../models/Room';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { AppConstants } from '../../../app.comstamt';
+import { AppConstants } from '../../../app.constant';
 import { DrawingService } from '../../../services/drawing.service';
 import { PathFindingService } from '../../../services/pathFinding.service';
 import { Path } from '../../../models/Path';
@@ -60,6 +60,8 @@ export class NavigatorComponent{
   public submit(): void {
     console.log(this.form.value);
     let paths: Path[] = this.pathFindingService.calculateShortestPath(this.form.get('PointFromControl')!.value, this.form.get('PointToControl')!.value);
+    console.log(paths);
+    
     //this.drawingService.drawPaths(paths, this.canvas);
   }
 }

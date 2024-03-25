@@ -3,7 +3,7 @@ import { Room } from '../models/Room';
 import { Path } from '../models/Path';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PathFindingService 
 {
@@ -11,33 +11,34 @@ export class PathFindingService
         let startFloor : number = startRoom.floor;
         let endFloor : number = endRoom.floor;
         let result : Path[] = [];
-        if(startFloor > endFloor){
+if(startFloor > endFloor){
             while(startFloor < endFloor){
-                let stairs = new Room(1, 1, 1, "stairs", 1); //TODO get the correct stairs
-                let path : Path = {
-                    floor : startFloor,
-                    rooms : startRoom.calculateShortestPath(stairs)
+            let stairs = startRoom.findClosestStairs();
+            let path : Path = {
+                floor : startFloor,
+                rooms : startRoom.calculateShortestPath(stairs)
                 }
                 result.push(path)
                 startFloor--;
             }
         } else if(startFloor < endFloor){
             while(startFloor > endFloor){
-                let stairs = new Room(1, 1, 1, "stairs", 1); //TODO get the correct stairs
-                let path : Path = {
-                    floor : startFloor,
-                    rooms : startRoom.calculateShortestPath(stairs)
+                let stairs = startRoom.findClosestStairs();
+            let path : Path = {
+                floor : startFloor,
+                rooms : startRoom.calculateShortestPath(stairs)
                 }
-                result.push(path)
-                startFloor++;
+            result.push(path)
+            startFloor++;
             }
         }else{
             let path: Path = {
-                floor : startFloor,
-                rooms : startRoom.calculateShortestPath(endRoom)
-            }
+                floor: startFloor,
+                rooms: startRoom.calculateShortestPath(endRoom),
+            };
             result.push(path);
         }
+        
         return result;
     }
 }
