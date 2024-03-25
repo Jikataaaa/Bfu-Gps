@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Room } from '../../../models/Room';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -12,8 +12,8 @@ import { Path } from '../../../models/Path';
   templateUrl: './navigator.component.html',
   styleUrl: './navigator.component.scss'
 })
-export class NavigatorComponent{
-  @ViewChild('canvas') canvas: ElementRef<HTMLCanvasElement> | undefined;
+export class NavigatorComponent implements AfterViewInit{
+  @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
 
   public form!: FormGroup;
   public filteredRoomsFrom: Room[] = [];
@@ -26,6 +26,12 @@ export class NavigatorComponent{
     this.buildForm();
   }
 
+  ngAfterViewInit(): void {
+    this.drawingService.ctx = this.canvas.nativeElement.getContext('2d')!;
+    this.drawingService.width = this.canvas.nativeElement.width;
+    this.drawingService.height = this.canvas.nativeElement.height;   
+  }
+
   private buildForm(): void {
     this.form = new FormGroup({
       PointFromControl: new FormControl(undefined, Validators.required),
@@ -36,13 +42,13 @@ export class NavigatorComponent{
     this.filteredRoomsTo = AppConstants.rooms;
 
     this.form.get('PointFromControl')!.valueChanges.subscribe({
-      next: (value) => {
+      next: (value : string) => {
         this.filteredRoomsFrom = this.filter(value);
       }
     })
 
     this.form.get('PointToControl')!.valueChanges.subscribe({
-      next: (value) => {
+      next: (value : string) => {
         this.filteredRoomsTo = this.filter(value);
       }
     })
@@ -58,10 +64,15 @@ export class NavigatorComponent{
     return room.displayName ?? '';
   }
   public submit(): void {
-    console.log(this.form.value);
-    let paths: Path[] = this.pathFindingService.calculateShortestPath(this.form.get('PointFromControl')!.value, this.form.get('PointToControl')!.value);
-    console.log(paths);
-    
-    //this.drawingService.drawPaths(paths, this.canvas);
+    debugger;
+    this.clear();
+    let roomFrom: Room = this.form.get('PointFromControl')!.value;
+    let roomTo: Room = this.form.get('PointToControl')!.value;
+    let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);  
+    this.drawingService.drawNavigation(paths, '/assets/1f76d48e-2bf2-435c-8358-2f37ba128509.jpg');    
+  }
+
+  public clear(): void {
+    this.drawingService.ctx.clearRect(0, 0, this.drawingService.width, this.drawingService.height);
   }
 }

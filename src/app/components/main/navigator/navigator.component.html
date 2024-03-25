@@ -1,31 +1,30 @@
-<form [formGroup]="form">
-    <div class="row m-3">
-        <mat-form-field appearance="fill" class="col">
-            <mat-label>Room 1</mat-label>
-            <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointFromControl"
-                    [matAutocomplete]="autoFrom">
-            <mat-autocomplete #autoFrom="matAutocomplete" [displayWith]="getRoomName">
-                <mat-option *ngFor="let room of filteredRoomsFrom" [value]="room">
-                    {{room.displayName}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+<form [formGroup]="form" class="row m-3">
+    <mat-form-field appearance="fill" class="col">
+        <mat-label>Room 1</mat-label>
+        <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointFromControl"
+                [matAutocomplete]="autoFrom">
+        <mat-autocomplete #autoFrom="matAutocomplete" [displayWith]="getRoomName">
+            <mat-option *ngFor="let room of filteredRoomsFrom" [value]="room">
+                {{room.displayName}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
 
-        <mat-form-field appearance="fill" class="col">
-            <mat-label>Room 2</mat-label>
-            <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointToControl"
-                    [matAutocomplete]="autoTo">
-            <mat-autocomplete #autoTo="matAutocomplete" [displayWith]="getRoomName">
-                <mat-option *ngFor="let room of filteredRoomsTo" [value]="room">
-                    {{room.displayName}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-    </div>
-    <div class="row ms-4 me-4">
-        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-    </div>
-    <div class="row">
-        <canvas #canvas class="col" width="500" height="500"></canvas>
-    </div>
+    <mat-form-field appearance="fill" class="col">
+        <mat-label>Room 2</mat-label>
+        <input type="text" placeholder="Select a Room" aria-label="Room" matInput formControlName="PointToControl"
+                [matAutocomplete]="autoTo">
+        <mat-autocomplete #autoTo="matAutocomplete" [displayWith]="getRoomName">
+            <mat-option *ngFor="let room of filteredRoomsTo" [value]="room">
+                {{room.displayName}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
 </form>
+<div class="d-flex align-items-center justify-content-center">
+    <canvas #canvas height="350px" width="350px"></canvas>
+</div>
+<div class="row m-4 gap-2">
+    <button mat-raised-button color="primary" (click)="submit()" class="col">Submit</button>
+    <button mat-raised-button color="warn" (click)="clear()" class="col">Clear</button>
+</div>
