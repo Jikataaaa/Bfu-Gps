@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Room } from '../models/Room';
 import { Path } from '../models/Path';
+import { RoomData } from '../models/RoomData';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class DrawingService
     }
     image.src = imagePath;
   }
-  private drawPath(path: Room[]) 
+  private drawPath(path: RoomData[]) 
   {
     if (path.length < 2) {
       this.drawPoint(path[0]);
@@ -49,7 +50,7 @@ export class DrawingService
     }
   }
 
-  private drawLine(firstPoint: Room, secondPoint: Room) {
+  private drawLine(firstPoint: RoomData, secondPoint: RoomData) {
     this.ctx.beginPath();
     // draw a circle at the starting point
     this.drawPoint(firstPoint);
@@ -73,7 +74,7 @@ export class DrawingService
     this.ctx.stroke();
   }
 
-  private drawPoint(point: Room) {
+  private drawPoint(point: RoomData) {
     this.ctx.arc(point.x * this.width, point.y * this.height, this.strokeWidth, 0, 2 * Math.PI, false);
     this.ctx.fill();
   }
