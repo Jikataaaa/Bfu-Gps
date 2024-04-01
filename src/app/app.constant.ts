@@ -84,19 +84,19 @@ export class AppConstants {
         let room431 : Room = new Room( 0.1, 0.1, '431', 4);
         let room432 : Room = new Room( 0.1, 0.1, '432', 4);
 
-        let stairs206 = new Room(0.1, 0.1, 'stairs', 2);
-        let stairs205 = new Room(0.1, 0.1, 'stairs', 2);
-        let stairs208 = new Room(0.1, 0.1, 'stairs', 2);
-        let stairs210 = new Room(0.1, 0.1, 'stairs', 2);
-        let stairs215 = new Room(0.1, 0.1, 'stairs', 2);
-        let stairs223 = new Room(0.1, 0.1, 'stairs', 2);
+        let stairs206 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room206);
+        let stairs205 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room205);
+        let stairs208 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room208);
+        let stairs210 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room210);
+        let stairs215 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room215);
+        let stairs223 = new Room(0.1, 0.1, 'stairs', 2).addNeighbour(room223);
 
-        let stairs324 = new Room(0.1, 0.1, 'stairs', 3);
-        let stairs316 = new Room(0.1, 0.1, 'stairs', 3);
+        let stairs324 = new Room(0.1, 0.1, 'stairs', 3).addNeighbour(room324);
+        let stairs316 = new Room(0.1, 0.1, 'stairs', 3).addNeighbour(room316);
 
         
-        let stairs431 = new Room(0.1, 0.1, 'stairs', 4);
-        let stairs423 = new Room(0.1, 0.1, 'stairs', 4);
+        let stairs431 = new Room(0.1, 0.1, 'stairs', 4).addNeighbour(room431);
+        let stairs423 = new Room(0.1, 0.1, 'stairs', 4).addNeighbour(room423);
 
         let rooms : Room[] = [];
         rooms.push(room201.addNeighbour(room202).addNeighbour(room224));
