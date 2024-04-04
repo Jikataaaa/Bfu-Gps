@@ -38,8 +38,8 @@ export class NavigatorComponent implements AfterViewInit{
       PointToControl: new FormControl(undefined, Validators.required)
     });
 
-    this.filteredRoomsFrom = AppConstants.rooms;
-    this.filteredRoomsTo = AppConstants.rooms;
+    this.filteredRoomsFrom = AppConstants.rooms.filter(option => option.displayName != '');
+    this.filteredRoomsTo = AppConstants.rooms.filter(option => option.displayName != '');
 
     this.form.get('PointFromControl')!.valueChanges.subscribe({
       next: (value : string) => {
@@ -56,9 +56,13 @@ export class NavigatorComponent implements AfterViewInit{
   }
   private filter(value: Room | string): Room[] {
     if (typeof value === 'string') {
-      return AppConstants.rooms.filter(option => option.displayName.toLowerCase().includes(value.toLowerCase()));
+      return AppConstants.rooms
+        .filter(option => option.displayName != '')
+        .filter(option => option.displayName.toLowerCase().includes(value.toLowerCase()));
     }
-    return AppConstants.rooms.filter(option => option.displayName.toLowerCase().includes(value.displayName.toLowerCase()));
+    return AppConstants.rooms
+      .filter(option => option.displayName != '')
+      .filter(option => option.displayName.toLowerCase().includes(value.displayName.toLowerCase()));
   }
   public getRoomName(room: Room): string {
     return room.displayName ?? '';
@@ -69,7 +73,7 @@ export class NavigatorComponent implements AfterViewInit{
     let roomFrom: Room = this.form.get('PointFromControl')!.value;
     let roomTo: Room = this.form.get('PointToControl')!.value;
     let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);  
-    this.drawingService.drawNavigation(paths, '/assets/1f76d48e-2bf2-435c-8358-2f37ba128509.jpg');    
+    this.drawingService.drawNavigation(paths, '/assets/floor-2.svg');    
   }
 
   public clear(): void {
