@@ -71,7 +71,7 @@ export class NavigatorComponent implements AfterViewInit{
     this.clear();
     let roomFrom: Room = this.form.get('PointFromControl')!.value;
     let roomTo: Room = this.form.get('PointToControl')!.value;
-    let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);  
+    let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);
     this.drawingService.drawNavigation(paths, 'assets/floor-2.svg');    
   }
 
