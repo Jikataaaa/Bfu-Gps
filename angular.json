@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "evacuation-navigator": {
+    "Bfu-Gps": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "evacuation-navigator:build:production"
+              "buildTarget": "Bfu-Gps:build:production"
             },
             "development": {
-              "buildTarget": "evacuation-navigator:build:development"
+              "buildTarget": "Bfu-Gps:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "evacuation-navigator:build"
+            "buildTarget": "Bfu-Gps:build"
           }
         },
         "test": {
