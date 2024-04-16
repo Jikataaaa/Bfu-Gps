@@ -14,7 +14,6 @@ export class PathFindingService {
         let result: Path[] = [];
         let floorDifference = endFloor - startFloor;
         while (startFloor != endFloor) {
-            debugger
             if (startFloor > endFloor) {
                 let stairs = this.findClosestStairs(startRoom);
                 let path: Path = {
@@ -54,7 +53,6 @@ export class PathFindingService {
     }
 
     private findClosestStairs(start: Room): Room {
-        debugger
         let settledPoints: Room[] = [];
         settledPoints.push(start)
         let unsettledPoints: Room[] = start.neighbours;
@@ -83,7 +81,6 @@ export class PathFindingService {
     }
 
     private findShortestPath(start: Room, destination: Room): RoomData[] {
-        debugger
         let settledPoints: Room[] = [];
         settledPoints.push(start);
         let unsettledPoints: Room[] = start.neighbours;

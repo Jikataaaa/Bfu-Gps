@@ -68,7 +68,6 @@ export class NavigatorComponent implements AfterViewInit{
     return room.displayName ?? '';
   }
   public submit(): void {
-    debugger;
     this.clear();
     let roomFrom: Room = this.form.get('PointFromControl')!.value;
     let roomTo: Room = this.form.get('PointToControl')!.value;
