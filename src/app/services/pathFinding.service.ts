@@ -9,9 +9,19 @@ import { AppConstants } from '../app.constant';
 })
 export class PathFindingService {
     public calculateShortestPath(startRoom: Room, endRoom: Room): Path[] {
+        let result: Path[] = [];
+        if(startRoom.displayName === endRoom.displayName){
+            let rooms: RoomData[] = [];
+            rooms.push(startRoom.onlyData());
+            let path: Path = {
+                floor: startRoom.floor,
+                rooms: rooms
+            }
+            result.push(path);
+            return result;
+        }
         let startFloor: number = startRoom.floor;
         let endFloor: number = endRoom.floor;
-        let result: Path[] = [];
         let floorDifference = endFloor - startFloor;
         while (startFloor != endFloor) {
             if (startFloor > endFloor) {
