@@ -66,7 +66,7 @@ export class NavigatorComponent implements AfterViewInit{
       .filter(option => option.displayName.toLowerCase().includes(value.displayName.toLowerCase()));
   }
   public getRoomName(room: Room): string {
-    return room.displayName ?? '';
+    return room && room.displayName ? room.displayName : '';
   }
   public submit(): void {
     this.clear();

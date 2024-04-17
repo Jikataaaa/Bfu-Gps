@@ -26,6 +26,7 @@ export class PathFindingService {
 
             } else if (startFloor < endFloor) {
                     let stairs = this.findClosestStairs(startRoom);
+                    
                     let path: Path = {
                         floor: startFloor,
                         rooms: this.findShortestPath(startRoom, stairs)
@@ -41,21 +42,22 @@ export class PathFindingService {
             floor: startFloor,
             rooms: this.findShortestPath(startRoom, endRoom),
         };
+        
         result.push(path);
         return result;
     }
     private getUpperStairs(stairs : Room, floorDifference: number) : Room{
-        stairs.floor = stairs.floor + floorDifference;
-        let index : number = AppConstants.rooms.lastIndexOf(stairs);
-        console.log(index);
-        return AppConstants.rooms[index];
+        let nextStairs = AppConstants.rooms.find(room => room.floor == stairs.floor + floorDifference && room.x == stairs.x && room.y == stairs.y)!
+        
+        return nextStairs;
         
     }
 
     private findClosestStairs(start: Room): Room {
         let settledPoints: Room[] = [];
         settledPoints.push(start)
-        let unsettledPoints: Room[] = start.neighbours;
+        let unsettledPoints: Room[] =[];
+        unsettledPoints.push(...start.neighbours);
         let currentRoom: Room = start;
 
         while (unsettledPoints.length != 0) {
@@ -83,7 +85,8 @@ export class PathFindingService {
     private findShortestPath(start: Room, destination: Room): RoomData[] {
         let settledPoints: Room[] = [];
         settledPoints.push(start);
-        let unsettledPoints: Room[] = start.neighbours;
+        let unsettledPoints: Room[] =[];
+        unsettledPoints.push(...start.neighbours);
         let lastPoint: Room = start;
         let path: RoomData[] = [];
         path.push(start.onlyData());
@@ -91,7 +94,8 @@ export class PathFindingService {
 
         while (unsettledPoints.length != 0) {
             let currentRoom: Room = unsettledPoints.shift()!;
-            lastPoint = this.findLastRoom(currentRoom, settledPoints)!;
+            let potentialLastPoint = this.findLastRoom(currentRoom, settledPoints);
+            lastPoint = !potentialLastPoint ? lastPoint : potentialLastPoint;
             path = [];
 
             if (currentRoom == destination) {

@@ -11,7 +11,7 @@ export class DrawingService
   public width: number = 0;
   public height: number = 0;
   public canvas!: HTMLCanvasElement;
-  public stroke: string = 'black';
+  public stroke: string = 'red';
   public strokeWidth: number = 2;
 
   public async drawNavigation(path: Path[]): Promise<string[]> {
