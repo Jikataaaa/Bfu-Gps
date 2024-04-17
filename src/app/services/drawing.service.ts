@@ -19,9 +19,6 @@ export class DrawingService
   
     for (let i = 0; i < path.length; i++) {
       let imagePath: string = `assets/floor-${path[i].floor}.svg`;
-      if (i == 1) {
-        imagePath = `assets/floor-${path[i].floor + 1}.svg`;
-      }
       await this.loadAndDrawImage(path[i], imagePath);
       images.push(this.canvas.toDataURL('image/png'));
       this.canvas.getContext('2d')!.clearRect(0, 0, this.width, this.height);

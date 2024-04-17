@@ -55,6 +55,9 @@ export class AppConstants {
         let point44: Room = new Room(0.345, 0.644, '', 2);
         let point45: Room = new Room(0.313, 0.667, '', 2);
         let point46: Room = new Room(0.566, 0.642, '', 2);
+
+        let stairs : Room = new Room(0.747,0.431,'stairs',2);
+        let stairs1 : Room = new Room(0.403,0.772,'stairs',2);
         let rooms: Room[] = [];
         rooms.push(point1.addNeighbour(point4));
         rooms.push(point2.addNeighbour(point4));
@@ -63,7 +66,7 @@ export class AppConstants {
         rooms.push(point5.addNeighbour(point6));
         rooms.push(point6.addNeighbour(point4).addNeighbour(point5).addNeighbour(point7).addNeighbour(point8));
         rooms.push(point7.addNeighbour(point6));
-        rooms.push(point8.addNeighbour(point6).addNeighbour(point9).addNeighbour(point11));
+        rooms.push(point8.addNeighbour(point6).addNeighbour(point9).addNeighbour(point11).addNeighbour(stairs1));
         rooms.push(point9.addNeighbour(point8));
         rooms.push(point10.addNeighbour(point11));
         rooms.push(point11.addNeighbour(point8).addNeighbour(point10).addNeighbour(point12));
@@ -78,7 +81,7 @@ export class AppConstants {
         rooms.push(point20.addNeighbour(point19));
         rooms.push(point21.addNeighbour(point19).addNeighbour(point22).addNeighbour(point23));
         rooms.push(point22.addNeighbour(point21));
-        rooms.push(point23.addNeighbour(point21).addNeighbour(point22).addNeighbour(point24).addNeighbour(point33));
+        rooms.push(point23.addNeighbour(point21).addNeighbour(point22).addNeighbour(point24).addNeighbour(point33).addNeighbour(stairs));
         rooms.push(point24.addNeighbour(point23));
         rooms.push(point25.addNeighbour(point26));
         rooms.push(point26.addNeighbour(point25).addNeighbour(point27).addNeighbour(point29).addNeighbour(point23));
@@ -90,7 +93,7 @@ export class AppConstants {
         rooms.push(point32.addNeighbour(point31));
         rooms.push(point33.addNeighbour(point23).addNeighbour(point31).addNeighbour(point35).addNeighbour(point46));
         rooms.push(point34.addNeighbour(point35));
-        rooms.push(point35.addNeighbour(point33).addNeighbour(point34).addNeighbour(point36));
+        rooms.push(point35.addNeighbour(point33).addNeighbour(point34).addNeighbour(point36).addNeighbour(stairs));
         rooms.push(point36.addNeighbour(point35).addNeighbour(point37).addNeighbour(point39));
         rooms.push(point37.addNeighbour(point36));
         rooms.push(point38.addNeighbour(point39));
@@ -100,8 +103,11 @@ export class AppConstants {
         rooms.push(point42.addNeighbour(point44));
         rooms.push(point43.addNeighbour(point45));
         rooms.push(point44.addNeighbour(point40).addNeighbour(point42).addNeighbour(point45).addNeighbour(point46));
-        rooms.push(point45.addNeighbour(point4).addNeighbour(point44).addNeighbour(point44));
+        rooms.push(point45.addNeighbour(point4).addNeighbour(point44).addNeighbour(point44).addNeighbour(stairs1));
         rooms.push(point46.addNeighbour(point33).addNeighbour(point44));
+
+        rooms.push(stairs.addNeighbour(point23).addNeighbour(point33));
+        rooms.push(stairs1.addNeighbour(point8).addNeighbour(point45));
         return rooms;
     }
 
@@ -147,6 +153,9 @@ export class AppConstants {
         let point44: Room = new Room(0.345, 0.644, '', 3);
         let point45: Room = new Room(0.313, 0.667, '', 3);
         let point46: Room = new Room(0.566, 0.642, '', 3);
+        
+        let stairs : Room = new Room(0.747,0.431,'stairs',3);
+        let stairs1 : Room = new Room(0.403,0.772,'stairs',3);
         let rooms: Room[] = [];
         rooms.push(point1.addNeighbour(point4));
         rooms.push(point2.addNeighbour(point4));
@@ -155,7 +164,7 @@ export class AppConstants {
         rooms.push(point5.addNeighbour(point6));
         rooms.push(point6.addNeighbour(point4).addNeighbour(point5).addNeighbour(point7).addNeighbour(point8));
         rooms.push(point7.addNeighbour(point6));
-        rooms.push(point8.addNeighbour(point6).addNeighbour(point9).addNeighbour(point11));
+        rooms.push(point8.addNeighbour(point6).addNeighbour(point9).addNeighbour(point11).addNeighbour(stairs1));
         rooms.push(point9.addNeighbour(point8));
         rooms.push(point10.addNeighbour(point11));
         rooms.push(point11.addNeighbour(point8).addNeighbour(point10).addNeighbour(point12));
@@ -170,7 +179,7 @@ export class AppConstants {
         rooms.push(point20.addNeighbour(point19));
         rooms.push(point21.addNeighbour(point19).addNeighbour(point22).addNeighbour(point23));
         rooms.push(point22.addNeighbour(point21));
-        rooms.push(point23.addNeighbour(point21).addNeighbour(point22).addNeighbour(point24).addNeighbour(point33));
+        rooms.push(point23.addNeighbour(point21).addNeighbour(point22).addNeighbour(point24).addNeighbour(point33).addNeighbour(stairs));
         rooms.push(point24.addNeighbour(point23));
         rooms.push(point25.addNeighbour(point26));
         rooms.push(point26.addNeighbour(point25).addNeighbour(point27).addNeighbour(point29).addNeighbour(point23));
@@ -179,7 +188,7 @@ export class AppConstants {
         rooms.push(point29.addNeighbour(point26).addNeighbour(point27).addNeighbour(point28).addNeighbour(point31));
         rooms.push(point30.addNeighbour(point31));
         rooms.push(point31.addNeighbour(point29).addNeighbour(point30).addNeighbour(point33));
-        rooms.push(point33.addNeighbour(point23).addNeighbour(point31).addNeighbour(point35).addNeighbour(point46));
+        rooms.push(point33.addNeighbour(point23).addNeighbour(point31).addNeighbour(point35).addNeighbour(point46).addNeighbour(stairs));
         rooms.push(point35.addNeighbour(point33).addNeighbour(point36));
         rooms.push(point36.addNeighbour(point35).addNeighbour(point39));
         rooms.push(point39.addNeighbour(point36).addNeighbour(point40));
@@ -187,8 +196,12 @@ export class AppConstants {
         rooms.push(point41.addNeighbour(point40));
         rooms.push(point43.addNeighbour(point45));
         rooms.push(point44.addNeighbour(point40).addNeighbour(point45).addNeighbour(point46));
-        rooms.push(point45.addNeighbour(point4).addNeighbour(point44).addNeighbour(point44));
+        rooms.push(point45.addNeighbour(point4).addNeighbour(point44).addNeighbour(point44).addNeighbour(stairs1));
         rooms.push(point46.addNeighbour(point33).addNeighbour(point44));
+        
+
+        rooms.push(stairs.addNeighbour(point23).addNeighbour(point33));
+        rooms.push(stairs1.addNeighbour(point8).addNeighbour(point45));
         return rooms;
     }
 }

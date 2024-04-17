@@ -73,7 +73,6 @@ export class NavigatorComponent implements AfterViewInit{
     let roomFrom: Room = this.form.get('PointFromControl')!.value;
     let roomTo: Room = this.form.get('PointToControl')!.value;
     let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);
-    paths = paths.concat(paths);
     this.drawingService.drawNavigation(paths).then(images => {
       this.images = images;
     }).catch(error => {
