@@ -70,7 +70,7 @@ export class NavigatorComponent implements AfterViewInit{
       .sort((a, b) => a.displayName.localeCompare(b.displayName));
   }
   public getRoomName(room: Room): string {
-    return room.displayName ?? '';
+    return room && room.displayName ? room.displayName : '';
   }
   public submit(): void {
     this.clear();
