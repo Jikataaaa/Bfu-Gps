@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Room } from '../../../models/Room';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { AppConstants } from '../../../app.constant';
 import { DrawingService } from '../../../services/drawing.service';
 import { PathFindingService } from '../../../services/pathFinding.service';
@@ -19,6 +18,8 @@ export class NavigatorComponent implements AfterViewInit{
   public filteredRoomsFrom: Room[] = [];
   public filteredRoomsTo: Room[] = [];
 
+  public images: string[] = [];
+
   constructor(
     public drawingService: DrawingService, 
     public pathFindingService: PathFindingService
@@ -27,7 +28,7 @@ export class NavigatorComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.drawingService.ctx = this.canvas.nativeElement.getContext('2d')!;
+    this.drawingService.canvas = this.canvas.nativeElement;
     this.drawingService.width = this.canvas.nativeElement.width;
     this.drawingService.height = this.canvas.nativeElement.height;   
   }
@@ -72,10 +73,24 @@ export class NavigatorComponent implements AfterViewInit{
     let roomFrom: Room = this.form.get('PointFromControl')!.value;
     let roomTo: Room = this.form.get('PointToControl')!.value;
     let paths: Path[] = this.pathFindingService.calculateShortestPath(roomFrom, roomTo);
-    this.drawingService.drawNavigation(paths, 'assets/floor-2.svg');    
+    paths = paths.concat(paths);
+    this.drawingService.drawNavigation(paths).then(images => {
+      this.images = images;
+    }).catch(error => {
+      console.error('Failed to draw navigation:', error);
+    }); 
+  }
+
+  public currentSlide = 0;
+  next() {
+    this.currentSlide = (this.currentSlide + 1) % this.images.length;
+  }
+
+  previous() {
+    this.currentSlide = (this.currentSlide + this.images.length - 1) % this.images.length;
   }
 
   public clear(): void {
-    this.drawingService.ctx.clearRect(0, 0, this.drawingService.width, this.drawingService.height);
+    this.drawingService.canvas.getContext('2d')!.clearRect(0, 0, this.drawingService.width, this.drawingService.height);
   }
 }
