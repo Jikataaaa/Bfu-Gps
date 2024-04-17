@@ -39,8 +39,10 @@ export class NavigatorComponent implements AfterViewInit{
       PointToControl: new FormControl(undefined, Validators.required)
     });
 
-    this.filteredRoomsFrom = AppConstants.rooms.filter(option => option.displayName != '');
-    this.filteredRoomsTo = AppConstants.rooms.filter(option => option.displayName != '');
+    this.filteredRoomsFrom = AppConstants.rooms.filter(option => option.displayName != '' && option.displayName != 'stairs')
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
+    this.filteredRoomsTo = AppConstants.rooms.filter(option => option.displayName != '' && option.displayName != 'stairs')
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
     this.form.get('PointFromControl')!.valueChanges.subscribe({
       next: (value : string) => {
@@ -58,12 +60,14 @@ export class NavigatorComponent implements AfterViewInit{
   private filter(value: Room | string): Room[] {
     if (typeof value === 'string') {
       return AppConstants.rooms
-        .filter(option => option.displayName != '')
-        .filter(option => option.displayName.toLowerCase().includes(value.toLowerCase()));
+        .filter(option => option.displayName != '' && option.displayName != 'stairs')
+        .filter(option => option.displayName.toLowerCase().includes(value.toLowerCase()))
+        .sort((a, b) => a.displayName.localeCompare(b.displayName));
     }
     return AppConstants.rooms
-      .filter(option => option.displayName != '')
-      .filter(option => option.displayName.toLowerCase().includes(value.displayName.toLowerCase()));
+      .filter(option => option.displayName != '' && option.displayName != 'stairs')
+      .filter(option => option.displayName.toLowerCase().includes(value.displayName.toLowerCase()))
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
   }
   public getRoomName(room: Room): string {
     return room.displayName ?? '';
@@ -80,11 +84,11 @@ export class NavigatorComponent implements AfterViewInit{
     }); 
   }
 
-  next() {
+  public next() {
     this.currentSlide = (this.currentSlide + 1) % this.images.length;
   }
 
-  previous() {
+  public previous() {
     this.currentSlide = (this.currentSlide + this.images.length - 1) % this.images.length;
   }
 
