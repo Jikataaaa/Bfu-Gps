@@ -17,7 +17,7 @@ export class NavigatorComponent implements AfterViewInit{
   public form!: FormGroup;
   public filteredRoomsFrom: Room[] = [];
   public filteredRoomsTo: Room[] = [];
-
+  public currentSlide: number = 0;
   public images: string[] = [];
 
   constructor(
@@ -81,7 +81,6 @@ export class NavigatorComponent implements AfterViewInit{
     }); 
   }
 
-  public currentSlide = 0;
   next() {
     this.currentSlide = (this.currentSlide + 1) % this.images.length;
   }
@@ -91,6 +90,7 @@ export class NavigatorComponent implements AfterViewInit{
   }
 
   public clear(): void {
+    this.images = [];
     this.drawingService.canvas.getContext('2d')!.clearRect(0, 0, this.drawingService.width, this.drawingService.height);
   }
 }
